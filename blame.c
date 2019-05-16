@@ -925,9 +925,6 @@ static int *fuzzy_find_matching_lines(struct blame_origin *parent,
 	struct fingerprint *fingerprints_a = parent->fingerprints;
 	struct fingerprint *fingerprints_b = target->fingerprints;
 
-	if (length_a <= 0)
-		return NULL;
-
 	int i, *result, *second_best_result,
 		*certainties, *similarities, similarity_count;
 
@@ -942,6 +939,9 @@ static int *fuzzy_find_matching_lines(struct blame_origin *parent,
 	 * with the same line in A according to max_search_distance_a.
 	 */
 	int max_search_distance_a = 10, max_search_distance_b;
+
+	if (length_a <= 0)
+		return NULL;
 
 	if (max_search_distance_a >= length_a)
 		max_search_distance_a = length_a ? length_a - 1 : 0;
