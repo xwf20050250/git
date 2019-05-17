@@ -298,7 +298,7 @@ EOF
 last_test=13
 
 test_expect_success setup '
-	{ for i in $(seq 2 $last_test)
+	{ for i in $(test_seq 2 $last_test)
 	do
 		# Append each line in a separate commit to make it easy to
 		# check which original line the blame output relates to.
@@ -314,7 +314,7 @@ test_expect_success setup '
 		done } <"a$i"
 	done } &&
 
-	{ for i in $(seq 2 $last_test)
+	{ for i in $(test_seq 2 $last_test)
 	do
 		# Overwrite the files with the final content.
 		cp b$i $i &&
@@ -329,7 +329,7 @@ test_expect_success setup '
 	IGNOREME=$(git rev-parse HEAD)
 '
 
-for i in $(seq 2 $last_test); do
+for i in $(test_seq 2 $last_test); do
 	eval title="\$title$i"
 	test_expect_success "$title" \
 	"git blame -M9 --ignore-rev $IGNOREME $i | sed -e \"$pick_author\" >actual && test_cmp expected$i actual"
